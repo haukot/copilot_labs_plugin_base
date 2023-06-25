@@ -39,3 +39,13 @@ process.stdin
       }, 10);
     });
   });
+
+
+// TODO: maybe do through socket? Will we in this way have logs and response
+// const net = require('net');
+// const rpc_server = server.tcp();
+// const server = net.createServer();
+// server.on('connection', function(socket) {
+//   socket.pipe(rpc_server).pipe(socket);
+// });
+// server.listen('/tmp/test.sock');
