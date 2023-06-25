@@ -1,5 +1,17 @@
 # POC: Github Copilot Labs Plugin Base
 
+# What's inside
+
+Concept is similar with agent.js in Github Copilot VIM plugin, but it works directly with extension.js file from VS Code extension.
+So it should provide more up to date versions.
+
+In the similar way it uses jsonrpc protocol upon runned process.
+
+* `index.js` is the code that should be implemented by plugin(VIM, Emacs, etc). It contains jsonrpc client code. It spawns `agent.js` as process, and sends jsonrpc commands to it.
+* `agent.js` is a middleware code between client and extension. It contains jsonrpc server, and converts jsonrpc commands to extension commands.
+* `vscode_extension.js` is a wrapper upon extension. It imitates the extension activation and call commands.
+* `vscode` directory - is a stub on VS Code. It stubs VS Code functions in the way the extension uses them.
+
 # Preparations
 
 Firstly get github token for extension.
@@ -20,6 +32,8 @@ npx js-beautify -r ./extension/extension/dist/extension.js
 
 (beautify is not required, but in this way you can easier read errors)
 
+# Run
+
 Then run
 
 ```
@@ -27,7 +41,3 @@ node index.js
 ```
 
 It'll run `document` brush on the code.
-
-# Development
-
-If the code gets recursion, its probably because it got wrong properties answer from Github servers. Check that extension properties are correct
