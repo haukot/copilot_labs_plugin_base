@@ -2,24 +2,19 @@
 
 # Preparations
 
-Go to dist repo
-
-```
-cd dist
-```
-
-Firstly get github token for extension. You could use output from this code
-https://github.com/haukot/copilot_auth_example
+Firstly get github token for extension.
+Tokens from Github Copilot plugins are working(you could use output from this code https://github.com/haukot/copilot_auth_example).
+My personal Github token didn't work.
 
 Copy token without quotes to the file `SecretGithubToken`
 
 Download extension from https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-labs&ssr=false#overview
 
-and extract it to the folder you like(e.g. ~/extracted_extension_path)
+and extract it to the `extension` folder.
 
 ```
 npm i
-cp -r ~/extracted_extension_path/* extension
+unzip -o ~/Downloads/GitHub.copilot-labs-0.14.884.vsix -d extension
 npx js-beautify -r ./extension/extension/dist/extension.js
 ```
 
