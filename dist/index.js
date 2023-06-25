@@ -1,7 +1,7 @@
 var extension = require('./extension/extension/dist/extension.js');
 var vscode = require('vscode');
 
-setTimeout(async () => {
+module.exports.init = async () => {
   console.log('INIT EXT');
   await extension.init();
   console.log('ACTIVATE EXT');
@@ -17,10 +17,17 @@ setTimeout(async () => {
       setKeysForSync: () => {},
     },
   });
-  // extension.deactivate(); // TODO: needed?
+  // console.log(extension);
   console.log('ACTIVATED');
-  // TODO: we can event pass text to use brush?
-  vscode.commands.executeCommand("copilot-labs.use-brush", "document");
 
-  console.log(extension)
-}, 5000);
+  return 'OK';
+}
+
+module.exports.executeCommand = (name, ...args) => {
+  console.log('EXECUTE COMMAND COPILOT DIST', name, args);
+  vscode.commands.executeCommand(name, ...args);
+
+  return 'OK';
+}
+
+  // extension.deactivate(); // TODO: needed?
