@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "js-beautify": "^1.14.8",
     "vscode": "file:vscode"
   }
 }
