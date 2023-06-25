@@ -114,15 +114,15 @@ vscode.window.activeTextEditor = {
       }
     },
     end: {
-      line: 0,
-      character: 0,
+      line: 3,
+      character: 7,
       translate: (l, c) => {
         console.log('TRANSLATE end', l, c)
       }
     },
   },
   setDecorations: (d, d2) => {
-    console.log('SET DECORATIONS', d, d2)
+    // console.log('SET DECORATIONS', d, d2)
   },
   document: {
     uri: {
@@ -136,7 +136,7 @@ vscode.window.activeTextEditor = {
   },
   async edit(callback) {
     let toChange = {
-      replace: (oldC, newC) => console.log('REPLACE', oldC, newC),
+      replace: (selection, newContent) => console.log('REPLACE', selection, newContent),
     }
     // callback(fileContent)
     callback(toChange)
@@ -210,15 +210,39 @@ vscode.commands = {
     commands[e] = t
     return command
   },
-  executeCommand: (e, ...z) => {
+  executeCommand: async (e, ...z) => {
     let command = { name: e, args: z }
     console.log('#executeCommand', command)
     if (commands[e]) {
-      commands[e](...z)
+      return new Promise((resolve, reject) => {
+        vscode.window.activeTextEditor = {
+          ...vscode.window.activeTextEditor,
+          ...{
+            document: {
+              getText: (t) => {
+                // t - selection, could be null
+                return fileContent
+              },
+              languageId: 'python',
+            },
+            async edit(callback) {
+              let toChange = {
+                replace: (selection, newContent) => {
+                  console.log('REPLACE', selection, newContent),
+                  resolve(newContent)
+                }
+              }
+              // callback(fileContent)
+              callback(toChange)
+            }
+          }
+        }
+        commands[e](...z)
+      });
     } else {
       console.log('command not registered', command)
+      return { status: 'NotRegistered' }
     }
-    return command
   }
 }
 

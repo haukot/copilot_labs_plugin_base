@@ -11,6 +11,16 @@ let child = spawn('node', ['agent.js']);
 // Get output from the child process
 child.stdout.on('data', (data) => {
   console.log(`stdout: ${data}`);
+  try {
+    data = JSON.parse(data);
+    console.log(data)
+    if (data.result) {
+      console.log("stdout RESULT:");
+      console.log(data.result);
+    }
+  } catch (e) {
+    // console.log('ERROR', e);
+  }
 });
 
 // Get error messages from the child process
@@ -23,12 +33,54 @@ child.on('close', (code) => {
   console.log(`child process exited with code ${code}`);
 });
 
+const brushes = [{
+  id: "readability",
+  name: "readable",
+  label: "Make this code more readable",
+}, {
+  id: "types",
+  name: "add types",
+  label: "Add types to this code",
+}, {
+  id: "find-bug",
+  name: "fix bug",
+  label: "Find a bug in this code",
+}, {
+  id: "debug",
+  name: "debug",
+  label: "Make this code easier to debug",
+}, {
+  id: "clean",
+  name: "clean",
+  label: "Clean up this code",
+}, {
+  id: "detailed-comments",
+  name: "list steps",
+  label: "Document the steps of this code",
+}, {
+  id: "robust",
+  name: "make robust",
+  label: "Make this code more robust",
+}, {
+  id: "chunk",
+  name: "chunk",
+  label: "Break this code into smaller chunks",
+}, {
+  id: "document",
+  name: "document",
+  label: "Document this code",
+}, {
+  id: "custom",
+  name: "custom",
+  label: "Use a custom brush",
+}]
+
 // Send command
 child.stdin.write(JSON.stringify({
   jsonrpc: "2.0",
   method: 'useBrush',
-  params: ['document'],
-  id: 1, // TODO: server will reply with the same id. need to use that
+  params: ['debug'],
+  id: 1, // TODO: server will reply with the same id. But maybe more powerfull clients already use it?
 }));
 
 child.stdin.end();

@@ -1,18 +1,24 @@
 const jayson = require('jayson');
-const copilotLabsDist = require('./dist/index.js');
+const copilotLabsDist = require('./vscode_extension.js');
 
 copilotLabsDist.init();
 
 let commands = {
   "useBrush": "copilot-labs.use-brush"
 }
-// Create a server
+
 let server = jayson.server({
   useBrush: function(args, callback) {
     console.log("Execute command agent ARGS", args);
-    let result = copilotLabsDist.executeCommand(commands.useBrush, ...args);
-    console.log("RESULT", result);
-    callback(null, result);
+    copilotLabsDist.executeCommand(commands.useBrush, ...args)
+      .then((result) => {
+        console.log("RESULT", result);
+        callback(null, result);
+      })
+      .catch((error) => {
+        console.log("ERROR", error);
+        callback(null, error);
+      });
   },
 });
 
@@ -20,11 +26,16 @@ let server = jayson.server({
 process.stdin
   .on('data', (data) => {
     let request = JSON.parse(data);
-    console.log("EXECUTE REQUEST", request);
+    console.log("SERVER GET REQUEST", request);
 
     server.call(request, (error, response) => {
-      console.log("EXECUTION RESPONSE", error, response);
+      console.log("SERVER SENDS RESPONSE", error, response);
       // Send the JSON-RPC response to the parent process
-      process.stdout.write(JSON.stringify(response));
+
+      // setTimeout so it'll not interfere with logs, and will send
+      // separate stdout
+      setTimeout(() => {
+        process.stdout.write(JSON.stringify(response));
+      }, 10);
     });
   });

@@ -23,11 +23,9 @@ module.exports.init = async () => {
   return 'OK';
 }
 
-module.exports.executeCommand = (name, ...args) => {
+module.exports.executeCommand = async (name, ...args) => {
   console.log('EXECUTE COMMAND COPILOT DIST', name, args);
-  vscode.commands.executeCommand(name, ...args);
-
-  return 'OK';
+  return vscode.commands.executeCommand(name, ...args);
 }
 
-  // extension.deactivate(); // TODO: needed?
+// extension.deactivate(); // TODO: needed?
