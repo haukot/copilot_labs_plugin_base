@@ -12,7 +12,7 @@ In a similar way it uses jsonrpc protocol upon runned process.
 * `vscode_extension.js` is a wrapper upon extension. It imitates the extension activation and call commands.
 * `vscode` directory - is a stub on VS Code. It stubs VS Code functions in the way the extension uses them.
 
-This example has many logs and uses jsonrpc upon stdin/stdout, which combination not really works great. So for real plugin we need to remove console.log statements, or use jsonrpc upon network or socket, so logs will not return by jsonrpc channel.
+This example has many logs and uses jsonrpc upon stdin/stdout, combination of which doesn't really work great. So for real plugin we need to remove console.log statements, or use jsonrpc upon network or socket, so logs will not return by jsonrpc channel to the client.
 
 # Preparations
 
