@@ -4,7 +4,7 @@
 
 VS Code plugins are essentially JS files that VS Code runs with its own callbacks. So we can write our own wrapper, which will define the functions needed for the plugin, and stub all other functions.
 
-A simple example is the (Github Copilot Labs)[https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-labs] extension, because it only needs selection and command.
+A simple example is the [Github Copilot Labs](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-labs) extension, because it only needs selection and command.
 
 VS Code extension is essentially a js module, which exports several functions. We are interested in `init()` and `activate()`.
 
