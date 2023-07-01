@@ -1,6 +1,6 @@
 # How to use VS Code plugins in your favorite editor(e.g. Emacs), with the example of Github Copilot Labs.
 
-## TLDR: Proof of concept code lies here https://github.com/haukot/copilot_labs_plugin_base
+### TLDR: Proof of concept code is here https://github.com/haukot/copilot_labs_plugin_base
 
 VS Code plugins are essentially JS files that VS Code runs with its own callbacks. So we can write our own wrapper, which will define the functions needed for the plugin, and stub all other functions.
 
@@ -152,7 +152,7 @@ vscode.commands.executeCommand('copilot-labs.use-brush', { fileContent, language
 ```
 
 Good! To integrate it with an IDE, we need some interface to run it, e.g. a jsonrpc server. IDE plugin will start it and send commands to it.
-It's not so interesting, so I'll just link the implementations: [IDE plugin's side](https://github.com/haukot/copilot_labs_plugin_base/blob/main/index.js) and [jsonrpc-server](https://github.com/haukot/copilot_labs_plugin_base/blob/main/agent.js). (Sorry for many comments, I'm a bit lazy to clean all this up :')
+It's not so interesting, so I'll just link the implementations: [IDE plugin's side](https://github.com/haukot/copilot_labs_plugin_base/blob/main/index.js) and [jsonrpc-server](https://github.com/haukot/copilot_labs_plugin_base/blob/main/agent.js). (Sorry for many comments,  for now I don't have to clean all this up :')
 
 This is a simple example with a simple extension, but it may pave the way for integrating more complex extensions too.
 
