@@ -12,11 +12,13 @@ In the similar way it uses jsonrpc protocol upon runned process.
 * `vscode_extension.js` is a wrapper upon extension. It imitates the extension activation and call commands.
 * `vscode` directory - is a stub on VS Code. It stubs VS Code functions in the way the extension uses them.
 
+This example has many logs and uses jsonrpc upon stdin/stdout, which combination not really works great. So for real plugin we need to remove console.log statements, or use jsonrpc upon network or socket, so logs will not return by jsonrpc channel.
+
 # Preparations
 
 Firstly get github token for extension.
 Tokens from Github Copilot plugins are working(you could use output from this code https://github.com/haukot/copilot_auth_example).
-My personal Github token didn't work.
+My [personal Github token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) didn't work.
 
 Copy token without quotes to the file `SecretGithubToken`
 
@@ -40,4 +42,4 @@ Then run
 node index.js
 ```
 
-It'll run `document` brush on the code.
+It'll run `debug` brush on the code.

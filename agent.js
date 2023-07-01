@@ -3,14 +3,11 @@ const copilotLabsDist = require('./vscode_extension.js');
 
 copilotLabsDist.init();
 
-let commands = {
-  "useBrush": "copilot-labs.use-brush"
-}
-
 let server = jayson.server({
-  useBrush: function(args, callback) {
+  executeCommand: function(args, callback) {
     console.log("Execute command agent ARGS", args);
-    copilotLabsDist.executeCommand(commands.useBrush, ...args)
+    const [command, ...rest] = args;
+    copilotLabsDist.executeCommand(command, ...rest)
       .then((result) => {
         console.log("RESULT", result);
         callback(null, result);
@@ -34,6 +31,8 @@ process.stdin
 
       // setTimeout so it'll not interfere with logs, and will send
       // separate stdout
+      // TODO: remove logs, so we don't have that problem. Or maybe it'll
+      // go away if we'll use socket instead of stdin/stdout?(see the end of the file)
       setTimeout(() => {
         process.stdout.write(JSON.stringify(response));
       }, 10);

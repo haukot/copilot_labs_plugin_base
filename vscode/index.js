@@ -105,7 +105,7 @@ vscode.window.showTextDocument = (e) => {
   return {}
 }
 
-let fileContent = 'def hello():\n  print("Hello, world!")\n\nhello()'
+let fileContent = 'some file content'
 vscode.window.activeTextEditor = {
   selection: {
     start: {
@@ -204,43 +204,23 @@ vscode.authentication = {
   }
 }
 
-let commands = {}
+
+// NOTE: this is our variable, not vscode's
+vscode._registeredCommands = {}
+
 vscode.commands = {
   registerCommand: (e, t) => {
     let command = { name: e, callback: t }
     console.log('#registerCommand', command)
-    commands[e] = t
+    vscode._registeredCommands[e] = t
     return command
   },
+  // NOTE: you need to replace this method to implement your functionality
   executeCommand: async (e, ...z) => {
     let command = { name: e, args: z }
     console.log('#executeCommand', command)
-    if (commands[e]) {
-      return new Promise((resolve, reject) => {
-        vscode.window.activeTextEditor = {
-          ...vscode.window.activeTextEditor,
-          ...{
-            document: {
-              getText: (t) => {
-                // t - selection, could be null
-                return fileContent
-              },
-              languageId: 'python',
-            },
-            async edit(callback) {
-              let toChange = {
-                replace: (selection, newContent) => {
-                  console.log('REPLACE', selection, newContent),
-                  resolve(newContent)
-                }
-              }
-              // callback(fileContent)
-              callback(toChange)
-            }
-          }
-        }
-        commands[e](...z)
-      });
+    if (vscode._registeredCommands[e]) {
+      vscode._registeredCommands[e](...z)
     } else {
       console.log('command not registered', command)
       return { status: 'NotRegistered' }

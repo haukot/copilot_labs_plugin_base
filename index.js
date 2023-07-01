@@ -33,6 +33,7 @@ child.on('close', (code) => {
   console.log(`child process exited with code ${code}`);
 });
 
+// These are existing brushes
 const brushes = [{
   id: "readability",
   name: "readable",
@@ -75,11 +76,15 @@ const brushes = [{
   label: "Use a custom brush",
 }]
 
+// This is our selection in the plugin
+let fileContent = 'def hello():\n  print("Hello, world!")\n\nhello()'
+let languageId = 'python';
+
 // Send command
 child.stdin.write(JSON.stringify({
   jsonrpc: "2.0",
-  method: 'useBrush',
-  params: ['debug'],
+  method: 'executeCommand', // TODO: should be 'executeCommand' to be in touch with lsp-server protocol
+  params: ['copilot-labs.use-brush', { fileContent, languageId }, 'debug'],
   id: 1, // TODO: server will reply with the same id. But maybe more powerfull clients already use it?
 }));
 
