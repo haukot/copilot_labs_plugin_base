@@ -1,3 +1,5 @@
+// This is stub for vscode-related functions
+
 const fs = require('fs');
 
 let vscode = {}
