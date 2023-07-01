@@ -14,6 +14,8 @@ In a similar way it uses jsonrpc protocol upon runned process.
 
 This example has many logs and uses jsonrpc upon stdin/stdout, combination of which doesn't really work great. So for real plugin we need to remove console.log statements, or use jsonrpc upon network or socket, so logs will not return by jsonrpc channel to the client.
 
+A more step by step explanation is [here](https://dev.to/haukot/how-to-use-vs-code-plugins-in-your-favorite-editoreg-emacs-with-the-example-of-github-copilot-labs-50pn).
+
 # Preparations
 
 Firstly get github token for extension.
